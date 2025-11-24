@@ -9,6 +9,7 @@ import { DataStore } from "@api/index";
 import { showNotification } from "@api/Notifications";
 import definePlugin, { StartAt } from "@utils/types";
 import { Menu } from "@webpack/common";
+import { findByProps } from "@webpack";
 
 function createPinMenuItem(userId: string) {
     return (
@@ -354,6 +355,9 @@ export default definePlugin({
                 });
                 shopCard.setAttribute("codeuriii", "true");
             });
+
+            // Décoration de profil
+            // findByProps("getToken").getToken()
         });
         this.observer.observe(document.body, { childList: true, subtree: true });
     },
