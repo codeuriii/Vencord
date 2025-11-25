@@ -357,7 +357,6 @@ export default definePlugin({
             });
 
             // Décoration de profil
-            // findByProps("getToken").getToken()
         });
         this.observer.observe(document.body, { childList: true, subtree: true });
     },
