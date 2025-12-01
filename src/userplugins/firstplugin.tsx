@@ -356,7 +356,27 @@ export default definePlugin({
                 shopCard.setAttribute("codeuriii", "true");
             });
 
-            // Décoration de profil
+            function DOMProfileDecoration() {
+                const container = document.querySelector("div.inner_c0bea0");
+                let userId = "";
+                userId = container?.querySelector<HTMLImageElement>(".avatar__44b0c")?.src.split("/")[4]!.split("?")[0] || "";
+                console.log(userId);
+                if (userId !== "some id") return;
+
+                const profileDecoration = document.createElement("div");
+                profileDecoration.className = "profileEffects__01370";
+                profileDecoration.setAttribute("role", "img");
+                profileDecoration.setAttribute("aria-label", "Un galion pirate hanté dérive sinistrement à travers le profil, un spectacle qui donne la chair de poule même aux marins les plus endurcis.");
+                profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/882db9a69083943f1f9a474527cb5a639b380e3f84070a8c2809a9258e28c29a?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
+                if (!container?.querySelector(".profileEffects__01370")) {
+                    container?.appendChild(profileDecoration);
+                    setTimeout(() => {
+                        profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/8d072dbcdb5b4cdfcf4bfaf7cc3289b49f297250bd7f1075b39dc0a6862437aa?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
+                    }, 3000);
+                }
+            }
+
+            DOMProfileDecoration();
         });
         this.observer.observe(document.body, { childList: true, subtree: true });
     },
