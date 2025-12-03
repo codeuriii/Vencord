@@ -39,6 +39,32 @@ function createPinMenuItem(userId: string) {
                     }
                 }}>
             </Menu.MenuItem>
+            <Menu.MenuItem
+                id="remove-decoration-avatar"
+                label="Remove Avatar Decoration"
+                action={async () => {
+                    const decorationsAvatar = await DataStore.get("decorationsAvatar") || "";
+                    if (decorationsAvatar && decorationsAvatar[userId]) {
+                        delete decorationsAvatar[userId];
+                        await DataStore.set("decorationsAvatar", decorationsAvatar);
+                        notify("Décoration supprimée !");
+                    }
+                }}
+            >
+            </Menu.MenuItem>
+            <Menu.MenuItem
+                id="remove-plaque-nominative"
+                label="Remove Nameplate"
+                action={async () => {
+                    const plaques = await DataStore.get("plaques") || "";
+                    if (plaques && plaques[userId]) {
+                        delete plaques[userId];
+                        await DataStore.set("plaques", plaques);
+                        notify("Plaque nominative supprimée !");
+                    }
+                }}>
+            </Menu.MenuItem>
+
         </>
     );
 }
@@ -55,10 +81,7 @@ const notify = (text: string) => {
 async function saveDecorations(userId: string, url: string) {
     const decorationsAvatar = await DataStore.get("decorationsAvatar") || "";
     if (decorationsAvatar) {
-        decorationsAvatar[userId] = [
-            url,
-            url.replace("assets.webm", "static.png")
-        ];
+        decorationsAvatar[userId] = url;
         DataStore.set("decorationsAvatar", decorationsAvatar);
         return decorationsAvatar;
     }
@@ -98,6 +121,10 @@ export default definePlugin({
 
     start() {
         this.observer = new MutationObserver(async () => {
+
+            console.log(await DataStore.get("decorationsAvatar"));
+            console.log(await DataStore.get("plaques"));
+
             document.querySelectorAll<HTMLImageElement>("img.badge__10651").forEach(img => {
                 if (img.src.includes(oldBadge)) {
                     img.src = img.src.replaceAll(oldBadge, newBadge);
