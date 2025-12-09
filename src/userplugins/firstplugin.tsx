@@ -369,7 +369,14 @@ export default definePlugin({
                                     await DataStore.set("temporaireAvatarDecorationUrl", url);
                                     notify("Plaque nominative stockée temporairement !");
                                 });
-                            }
+                            } else clone.addEventListener("click", () => {
+                                const profileEffects = document.querySelector(".profileEffects__01370");
+                                if (profileEffects) {
+                                    const images = Array.from(profileEffects.querySelectorAll("img"));
+                                    const srcs = images.map(img => img.src);
+                                    console.log(srcs);
+                                }
+                            });
                             wishlistBtn.parentElement!.insertBefore(clone, wishlistBtn);
                         }
                     }, 20);
