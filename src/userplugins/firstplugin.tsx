@@ -9,11 +9,13 @@ import { DataStore } from "@api/index";
 import { showNotification } from "@api/Notifications";
 import definePlugin, { StartAt } from "@utils/types";
 import { Menu } from "@webpack/common";
-import { findByProps } from "@webpack";
 
 function createPinMenuItem(userId: string) {
     return (
-        <>
+        <Menu.MenuItem
+            id="codeuriii-decorations"
+            label="CodeurIII Decorations"
+        >
             <Menu.MenuItem
                 id="set-decoration-avatar"
                 label="Set Avatar Decoration"
@@ -31,7 +33,7 @@ function createPinMenuItem(userId: string) {
                 id="set-plaque-nominative"
                 label="Set Nameplate"
                 action={async () => {
-                    const currentUrl = await DataStore.get("temporaireAvatarDecorationUrl") || "";
+                    const currentUrl = await DataStore.get("temporaireNameplateUrl") || "";
                     if (currentUrl) {
                         const staticUrl = currentUrl.replace("asset.webm", "static.png");
                         await savePlaques(userId, [currentUrl, staticUrl]);
@@ -39,6 +41,20 @@ function createPinMenuItem(userId: string) {
                     }
                 }}>
             </Menu.MenuItem>
+            <Menu.MenuItem
+                id="set-profile-effect"
+                label="Set Profile Effect"
+                action={async () => {
+                    const currentUrls = await DataStore.get("temporaireProfileEffectUrls") || "";
+                    if (currentUrls) {
+                        await saveProfileEffect(userId, currentUrls);
+                        notify("Effet de profil appliqué !");
+                    }
+                }}>
+            </Menu.MenuItem>
+
+            {/* ---------- */}
+
             <Menu.MenuItem
                 id="remove-decoration-avatar"
                 label="Remove Avatar Decoration"
@@ -64,8 +80,20 @@ function createPinMenuItem(userId: string) {
                     }
                 }}>
             </Menu.MenuItem>
+            <Menu.MenuItem
+                id="remove-profile-effect"
+                label="Remove Profile Effect"
+                action={async () => {
+                    const profileEffects = await DataStore.get("profileEffects") || "";
+                    if (profileEffects && profileEffects[userId]) {
+                        delete profileEffects[userId];
+                        await DataStore.set("profileEffects", profileEffects);
+                        notify("Effet de profil supprimée !");
+                    }
+                }}>
+            </Menu.MenuItem>
 
-        </>
+        </Menu.MenuItem>
     );
 }
 
@@ -95,6 +123,13 @@ async function savePlaques(userId: string, urls: [string, string]) {
     return plaques;
 }
 
+async function saveProfileEffect(userId: string, urls: []) {
+    const profileEffects = await DataStore.get("profileEffects") || {};
+    profileEffects[userId] = urls;
+    DataStore.set("profileEffects", profileEffects);
+    return profileEffects;
+}
+
 const UserContext: NavContextMenuPatchCallback = (children, props) => {
     const container = findGroupChildrenByChildId("close-dm", children);
     if (container) {
@@ -122,8 +157,6 @@ export default definePlugin({
     start() {
         this.observer = new MutationObserver(async () => {
 
-            console.log(await DataStore.get("decorationsAvatar"));
-            console.log(await DataStore.get("plaques"));
 
             document.querySelectorAll<HTMLImageElement>("img.badge__10651").forEach(img => {
                 if (img.src.includes(oldBadge)) {
@@ -366,17 +399,21 @@ export default definePlugin({
                                 clone.addEventListener("click", async () => {
                                     const video = nameplateContainer.querySelector("video");
                                     const url = video!.src;
-                                    await DataStore.set("temporaireAvatarDecorationUrl", url);
+                                    await DataStore.set("temporaireNameplateUrl", url);
                                     notify("Plaque nominative stockée temporairement !");
                                 });
-                            } else clone.addEventListener("click", () => {
-                                const profileEffects = document.querySelector(".profileEffects__01370");
-                                if (profileEffects) {
-                                    const images = Array.from(profileEffects.querySelectorAll("img"));
-                                    const srcs = images.map(img => img.src);
-                                    console.log(srcs);
-                                }
-                            });
+                            } else {
+                                clone.addEventListener("click", async () => {
+                                    const profileEffects = shopCard.querySelector(".profileEffects__01370");
+                                    if (profileEffects) {
+                                        const images = Array.from(profileEffects.querySelectorAll("img"));
+                                        const srcs = images.map(img => img.src);
+                                        srcs.pop(); // remove the transparent 1x1 gif
+                                        await DataStore.set("temporaireProfileEffectUrls", srcs);
+                                        notify("Effet de profil stocké temporairement !");
+                                    }
+                                });
+                            }
                             wishlistBtn.parentElement!.insertBefore(clone, wishlistBtn);
                         }
                     }, 20);
