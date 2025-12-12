@@ -53,7 +53,7 @@ function createPinMenuItem(userId: string) {
                 }}>
             </Menu.MenuItem>
 
-            {/* ---------- */}
+            <Menu.MenuSeparator/>
 
             <Menu.MenuItem
                 id="remove-decoration-avatar"
@@ -367,13 +367,12 @@ export default definePlugin({
             // Boutique part
             document.querySelectorAll(".productCardContainer_fcbddd").forEach(shopCard => {
                 const avatarContainer = shopCard.querySelector(".wrapper__44b0c.avatar_d71c71");
-                const nameplateContainer = shopCard.querySelector(".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0");
-                const title = shopCard.querySelector("h2")?.textContent;
-                if (title?.toLowerCase().includes("pack")) return;
+                const nameplateContainer = shopCard.querySelector(".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0") || shopCard.querySelector(".nameplatePreview__6d099");
+                const profileEffectContainer = shopCard.querySelector(".profileEffects__01370");
                 if (shopCard.getAttribute("codeuriii") === "true") return;
                 shopCard.addEventListener("mouseenter", () => {
                     setTimeout(() => {
-                        const wishlistBtn = shopCard.querySelector('div[aria-label="Ajouter à ta liste de souhaits"]');
+                        const wishlistBtn = shopCard.querySelector('.wishlistButton__979b1.wishlistButton__7b466');
                         const svgElement = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line\"><path d=\"M12 17V3\"/><path d=\"m6 11 6 6 6-6\"/><path d=\"M19 21H5\"/></svg>";
                         if (wishlistBtn) {
                             const clone = wishlistBtn.cloneNode(true) as HTMLElement;
@@ -385,6 +384,7 @@ export default definePlugin({
                             clone.style.top = "10px";
                             clone.style.zIndex = "1";
                             clone.style.pointerEvents = "auto";
+                            clone.style.cursor = "pointer";
                             const stop = (e: Event) => { e.stopPropagation(); e.preventDefault(); };
                             ["click", "mousedown", "mouseup", "touchstart", "touchend", "contextmenu"].forEach(evt =>
                                 clone.addEventListener(evt, stop as EventListener, { passive: false })
@@ -395,14 +395,16 @@ export default definePlugin({
                                     await DataStore.set("temporaireAvatarDecorationUrl", url);
                                     notify("Décoration stockée temporairement !");
                                 });
-                            } else if (nameplateContainer) {
+                            }
+                            if (nameplateContainer) {
                                 clone.addEventListener("click", async () => {
                                     const video = nameplateContainer.querySelector("video");
                                     const url = video!.src;
                                     await DataStore.set("temporaireNameplateUrl", url);
                                     notify("Plaque nominative stockée temporairement !");
                                 });
-                            } else {
+                            }
+                            if (profileEffectContainer) {
                                 clone.addEventListener("click", async () => {
                                     const profileEffects = shopCard.querySelector(".profileEffects__01370");
                                     if (profileEffects) {
@@ -431,7 +433,7 @@ export default definePlugin({
                 const container = document.querySelector("div.inner_c0bea0");
                 let userId = "";
                 userId = container?.querySelector<HTMLImageElement>(".avatar__44b0c")?.src.split("/")[4]!.split("?")[0] || "";
-                console.log(userId);
+                // console.log(userId);
                 if (userId !== "some id") return;
 
                 const profileDecoration = document.createElement("div");
