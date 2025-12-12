@@ -93,6 +93,54 @@ function createPinMenuItem(userId: string) {
                 }}>
             </Menu.MenuItem>
 
+            <Menu.MenuSeparator/>
+
+            <Menu.MenuItem
+                id="apply-all"
+                label="Apply All"
+                action={async () => {
+                    const temporaryDecorationsAvatar = await DataStore.get("temporaireAvatarDecorationUrl") || "";
+                    const temporaryPlaque = await DataStore.get("temporaireNameplateUrl") || "";
+                    const temporaryProfileEffect = await DataStore.get("temporaireProfileEffectUrls") || "";
+
+                    if (temporaryDecorationsAvatar) await saveDecorations(userId, temporaryDecorationsAvatar);
+                    if (temporaryPlaque) await savePlaques(userId, temporaryPlaque);
+                    if (temporaryProfileEffect) await saveProfileEffect(userId, temporaryProfileEffect);
+
+                    notify("Tous les éléments appliqués !");
+                }}
+            />
+            <Menu.MenuItem
+                id="remove-all"
+                label="Remove All"
+                action={async () => {
+                    const decorationsAvatar = await DataStore.get("decorationsAvatar") || {};
+                    const plaques = await DataStore.get("plaques") || {};
+                    const profileEffects = await DataStore.get("profileEffects") || {};
+
+                    if (decorationsAvatar && decorationsAvatar[userId]) delete decorationsAvatar[userId];
+                    if (plaques && plaques[userId]) delete plaques[userId];
+                    if (profileEffects && profileEffects[userId]) delete profileEffects[userId];
+
+                    await DataStore.set("decorationsAvatar", decorationsAvatar);
+                    await DataStore.set("plaques", plaques);
+                    await DataStore.set("profileEffects", profileEffects);
+
+                    notify("Tous les éléments supprimés !");
+                }}
+            />
+            <Menu.MenuItem
+                id="clear-temporary-storage"
+                label="Clear temporary storage"
+                action={async () => {
+                    await DataStore.set("temporaireAvatarDecorationUrl", "");
+                    await DataStore.set("temporaireNameplateUrl", "");
+                    await DataStore.set("temporaireProfileEffectUrls", "");
+
+                    notify("Stockage temporaire vidé !");
+                }}
+            />
+
         </Menu.MenuItem>
     );
 }
@@ -107,13 +155,9 @@ const notify = (text: string) => {
 };
 
 async function saveDecorations(userId: string, url: string) {
-    const decorationsAvatar = await DataStore.get("decorationsAvatar") || "";
-    if (decorationsAvatar) {
-        decorationsAvatar[userId] = url;
-        DataStore.set("decorationsAvatar", decorationsAvatar);
-        return decorationsAvatar;
-    }
-    return null;
+    const decorationsAvatar = await DataStore.get("decorationsAvatar") || {};
+    decorationsAvatar[userId] = url;
+    DataStore.set("decorationsAvatar", decorationsAvatar);
 }
 
 async function savePlaques(userId: string, urls: [string, string]) {
