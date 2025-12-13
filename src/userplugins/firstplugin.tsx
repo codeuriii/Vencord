@@ -59,7 +59,7 @@ function createPinMenuItem(userId: string) {
                 id="remove-decoration-avatar"
                 label="Remove Avatar Decoration"
                 action={async () => {
-                    const decorationsAvatar = await DataStore.get("decorationsAvatar") || "";
+                    const decorationsAvatar = await DataStore.get("decorationsAvatar") || {};
                     if (decorationsAvatar && decorationsAvatar[userId]) {
                         delete decorationsAvatar[userId];
                         await DataStore.set("decorationsAvatar", decorationsAvatar);
@@ -72,7 +72,7 @@ function createPinMenuItem(userId: string) {
                 id="remove-plaque-nominative"
                 label="Remove Nameplate"
                 action={async () => {
-                    const plaques = await DataStore.get("plaques") || "";
+                    const plaques = await DataStore.get("plaques") || {};
                     if (plaques && plaques[userId]) {
                         delete plaques[userId];
                         await DataStore.set("plaques", plaques);
@@ -84,7 +84,7 @@ function createPinMenuItem(userId: string) {
                 id="remove-profile-effect"
                 label="Remove Profile Effect"
                 action={async () => {
-                    const profileEffects = await DataStore.get("profileEffects") || "";
+                    const profileEffects = await DataStore.get("profileEffects") || {};
                     if (profileEffects && profileEffects[userId]) {
                         delete profileEffects[userId];
                         await DataStore.set("profileEffects", profileEffects);
@@ -157,20 +157,20 @@ const notify = (text: string) => {
 async function saveDecorations(userId: string, url: string) {
     const decorationsAvatar = await DataStore.get("decorationsAvatar") || {};
     decorationsAvatar[userId] = url;
-    DataStore.set("decorationsAvatar", decorationsAvatar);
+    await DataStore.set("decorationsAvatar", decorationsAvatar);
 }
 
 async function savePlaques(userId: string, urls: [string, string]) {
     const plaques = await DataStore.get("plaques") || {};
     plaques[userId] = urls;
-    DataStore.set("plaques", plaques);
+    await DataStore.set("plaques", plaques);
     return plaques;
 }
 
 async function saveProfileEffect(userId: string, urls: []) {
     const profileEffects = await DataStore.get("profileEffects") || {};
     profileEffects[userId] = urls;
-    DataStore.set("profileEffects", profileEffects);
+    await DataStore.set("profileEffects", profileEffects);
     return profileEffects;
 }
 
