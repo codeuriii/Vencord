@@ -200,17 +200,18 @@ const paths = {
     littleAvatarDecorationClassName: "c19a557985eb7793-avatarDecoration",
     wrapper: "._44b0c28be7879b7b-wrapper",
 
-    bigAvatar: ".avatar__44b0c",
-    bigAvatarClassName: "avatar__44b0c",
-    bigAvatarDecoration: ".avatarDecoration__44b0c",
-    bigAvatarDecorationClassName: "avatarDecoration__44b0c",
+    bigAvatar: "._44b0c28be7879b7b-avatar",
+    bigAvatarClassName: "_44b0c28be7879b7b-avatar",
+    bigAvatarDecoration: "._44b0c28be7879b7b-avatarDecoration",
+    bigAvatarDecorationClassName: "_44b0c28be7879b7b-avatarDecoration",
 
-    peopleListItem: "peopleListItem_cc6179",
+    // Je trouve pas
+    peopleListItem: ".peopleListItem_cc6179",
     videoImgClassName: "img__4bbc6",
     videoContainerClassName: "videoContainer__4bbc6",
     divVideoContainerClassName: "container__4bbc6",
 
-    childContainer: ".childContainer__91a9d",
+    childContainer: "._91a9d7f7e5248a56-childContainer",
     productContainer: ".productCardContainer_fcbddd",
 
     // Shop
