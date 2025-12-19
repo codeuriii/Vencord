@@ -189,6 +189,41 @@ const contextMenus = {
 const oldBadge = "https://cdn.discordapp.com/clan-badges/621302461600235531/59ae9c05acc03f2ea2f12c01c78c6bb1.png";
 const newBadge = "https://cdn.discordapp.com/clan-badges/1369311130513834174/e701df75ce906698f0d02ce19bf7c8c6.png";
 
+const paths = {
+    img_badge: "img._10651c5cfe637db6-badge",
+
+    // Message list item
+    messageListItem: "._5126c0cd07f243a0-messageListItem",
+    littleAvatar: "img.c19a557985eb7793-avatar",
+    littleAvatarDecoration: "img.c19a557985eb7793-avatarDecoration",
+
+    littleAvatarDecorationClassName: "c19a557985eb7793-avatarDecoration",
+    wrapper: "._44b0c28be7879b7b-wrapper",
+
+    bigAvatar: ".avatar__44b0c",
+    bigAvatarClassName: "avatar__44b0c",
+    bigAvatarDecoration: ".avatarDecoration__44b0c",
+    bigAvatarDecorationClassName: "avatarDecoration__44b0c",
+
+    peopleListItem: "peopleListItem_cc6179",
+    videoImgClassName: "img__4bbc6",
+    videoContainerClassName: "videoContainer__4bbc6",
+    divVideoContainerClassName: "container__4bbc6",
+
+    childContainer: ".childContainer__91a9d",
+    productContainer: ".productCardContainer_fcbddd",
+
+    // Shop
+    avatarContainer: ".wrapper__44b0c.avatar_d71c71",
+    nameplateContainer: ".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0",
+    nameplatePreview: ".nameplatePreview__6d099",
+    profileEffect: ".profileEffects__01370",
+    profileEffectClassName: "profileEffects__01370",
+    wishlistButton: ".wishlistButton__979b1.wishlistButton__7b466",
+    wishlistClassNameToRemove: "wishlistButton_c3d04b",
+
+    divInner: "div.inner_c0bea0"
+}
 
 export default definePlugin({
     name: "CodeurIII Plugin",
@@ -202,7 +237,7 @@ export default definePlugin({
         this.observer = new MutationObserver(async () => {
 
 
-            document.querySelectorAll<HTMLImageElement>("img.badge__10651").forEach(img => {
+            document.querySelectorAll<HTMLImageElement>(paths.img_badge).forEach(img => {
                 if (img.src.includes(oldBadge)) {
                     img.src = img.src.replaceAll(oldBadge, newBadge);
                 }
@@ -214,8 +249,8 @@ export default definePlugin({
                 await DataStore.set("decorationsAvatar", decorationsAvatar);
             }
 
-            document.querySelectorAll(".messageListItem__5126c").forEach(async messageListItem => {
-                const avatar = messageListItem.querySelector<HTMLImageElement>("img.avatar_c19a55");
+            document.querySelectorAll(paths.messageListItem).forEach(async messageListItem => {
+                const avatar = messageListItem.querySelector<HTMLImageElement>(paths.littleAvatar);
                 if (avatar) {
                     let userId = "";
                     Object.keys(decorationsAvatar).forEach(userid => {
@@ -226,10 +261,10 @@ export default definePlugin({
                     });
                     if (userId === "") return;
                     const parent = avatar.parentElement;
-                    if (parent && !parent.querySelector("img.avatarDecoration_c19a55")) {
+                    if (parent && !parent.querySelector(paths.littleAvatarDecoration)) {
                         const decoration = document.createElement("img");
                         decoration.src = decorationsAvatar[userId];
-                        decoration.className = "avatarDecoration_c19a55";
+                        decoration.className = paths.littleAvatarDecorationClassName;
                         let ancestor = parent;
                         while (ancestor && ancestor.tagName && ancestor.tagName.toLowerCase() !== "li") {
                             ancestor = ancestor.parentElement!;
@@ -247,7 +282,7 @@ export default definePlugin({
                     let searchElem: Element | null = messageListItem.previousElementSibling;
                     let foundDecoration: HTMLImageElement | null = null;
                     while (searchElem) {
-                        foundDecoration = searchElem.querySelector("img.avatarDecoration_c19a55");
+                        foundDecoration = searchElem.querySelector(paths.littleAvatarDecoration);
                         if (foundDecoration) break;
                         searchElem = searchElem.previousElementSibling;
                     }
@@ -280,11 +315,11 @@ export default definePlugin({
             };
 
             // Décoration pour le profil a droite en mp + éventuellement sur les serveurs
-            const element = "<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"avatarDecoration__44b0c\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><div class=\"avatarStack__44b0c\"><img class=\"avatar__44b0c\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></div></foreignObject></svg>";
-            const wrappers = Array.from(document.querySelectorAll(".wrapper__44b0c"));
+            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.bigAvatarDecoration}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><div class=\"avatarStack__44b0c\"><img class=\"${paths.bigAvatarClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></div></foreignObject></svg>`;
+            const wrappers = Array.from(document.querySelectorAll(paths.wrapper));
             for (const wrapper of wrappers) {
-                if (!wrapper.querySelector(".avatarDecoration__44b0c")) {
-                    const avatar = wrapper.querySelector<HTMLImageElement>(".avatar__44b0c")!;
+                if (!wrapper.querySelector(paths.bigAvatarDecoration)) {
+                    const avatar = wrapper.querySelector<HTMLImageElement>(paths.bigAvatar)!;
                     let userId = "";
                     Object.keys(decorationsAvatar).forEach(userid => {
                         if (avatar.src.includes(userid)) {
@@ -312,13 +347,13 @@ export default definePlugin({
                     const ancestor = wrapper.parentElement!.parentElement!.parentElement!.parentElement!.parentElement!;
                     if (ancestor.tagName.toLocaleLowerCase() === "li") {
                         ancestor.addEventListener("mouseenter", () => {
-                            const img = ancestor.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                            const img = ancestor.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                             if (img) {
                                 img.src = img.src.replaceAll("false", "true");
                             }
                         });
                         ancestor.addEventListener("mouseleave", () => {
-                            const img = ancestor.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                            const img = ancestor.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                             if (img) {
                                 img.src = img.src.replaceAll("true", "false");
                             }
@@ -327,8 +362,8 @@ export default definePlugin({
                 }
             }
 
-            document.querySelectorAll(".peopleListItem_cc6179").forEach(peopleListItem => {
-                const svgElement = peopleListItem.querySelector<SVGElement>(".avatarDecoration__44b0c");
+            document.querySelectorAll(paths.peopleListItem).forEach(peopleListItem => {
+                const svgElement = peopleListItem.querySelector<SVGElement>(paths.bigAvatarDecorationClassName);
                 const decorationImg = svgElement?.querySelector("img");
                 if (decorationImg) {
                     peopleListItem.addEventListener("mouseenter", () => {
@@ -347,8 +382,8 @@ export default definePlugin({
                 await DataStore.set("plaques", plaques);
             }
 
-            const videoElement = "<div class=\"container__4bbc6\" aria-hidden=\"true\" style=\"background: linear-gradient(90deg, transparent 0%, rgba(8, 100, 96, 0.08) 20%, rgba(8, 100, 96, 0.08) 50%, rgba(8, 100, 96, 0.2) 100%);\"><div class=\"videoContainer__4bbc6\" style=\"mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.3) 147.812px, rgb(0, 0, 0) 197.812px);\"><video src=\"x280\" poster=\"x281\" playsinline class=\"img__4bbc6\" tabindex=\"-1\" loop></video></div></div>";
-            document.querySelectorAll(".childContainer__91a9d").forEach(container => {
+            const videoElement = `<div class=\"${paths.divVideoContainerClassName}\" aria-hidden=\"true\" style=\"background: linear-gradient(90deg, transparent 0%, rgba(8, 100, 96, 0.08) 20%, rgba(8, 100, 96, 0.08) 50%, rgba(8, 100, 96, 0.2) 100%);\"><div class=\"${paths.videoContainerClassName}\" style=\"mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.3) 147.812px, rgb(0, 0, 0) 197.812px);\"><video src=\"x280\" poster=\"x281\" playsinline class=\"${paths.videoImgClassName}\" tabindex=\"-1\" loop></video></div></div>`;
+            document.querySelectorAll(paths.childContainer).forEach(container => {
                 if (container.querySelector("video")) return;
                 const avatar = container.querySelector("img")!;
                 let userId = "";
@@ -368,18 +403,18 @@ export default definePlugin({
                     });
                     if (userId2 === "") return;
                     container.addEventListener("mouseenter", () => {
-                        const img = container.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                        const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                         if (img) {
                             img.src = img.src.replaceAll("false", "true");
                         }
                     });
                     container.addEventListener("mouseleave", () => {
-                        const img = container.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                        const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                         if (img) {
                             img.src = img.src.replaceAll("true", "false");
                         }
                     });
-                    const img = container.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                    const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replace("true", "false");
                     }
@@ -390,7 +425,7 @@ export default definePlugin({
                     .replaceAll("x281", plaques[userId][1]);
                 container.addEventListener("mouseenter", () => {
                     const video = container.querySelector("video")!;
-                    const img = container.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                    const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("false", "true");
                     }
@@ -398,7 +433,7 @@ export default definePlugin({
                 });
                 container.addEventListener("mouseleave", () => {
                     const video = container.querySelector("video")!;
-                    const img = container.querySelector(".avatarDecoration__44b0c")?.querySelector("img");
+                    const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("true", "false");
                     }
@@ -409,20 +444,20 @@ export default definePlugin({
             });
 
             // Boutique part
-            document.querySelectorAll(".productCardContainer_fcbddd").forEach(shopCard => {
-                const avatarContainer = shopCard.querySelector(".wrapper__44b0c.avatar_d71c71");
-                const nameplateContainer = shopCard.querySelector(".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0") || shopCard.querySelector(".nameplatePreview__6d099");
-                const profileEffectContainer = shopCard.querySelector(".profileEffects__01370");
+            document.querySelectorAll(paths.productContainer).forEach(shopCard => {
+                const avatarContainer = shopCard.querySelector(paths.avatarContainer);
+                const nameplateContainer = shopCard.querySelector(paths.nameplateContainer) || shopCard.querySelector(paths.nameplatePreview);
+                const profileEffectContainer = shopCard.querySelector(paths.profileEffect);
                 if (shopCard.getAttribute("codeuriii") === "true") return;
                 shopCard.addEventListener("mouseenter", () => {
                     setTimeout(() => {
-                        const wishlistBtn = shopCard.querySelector('.wishlistButton__979b1.wishlistButton__7b466');
+                        const wishlistBtn = shopCard.querySelector(paths.wishlistButton);
                         const svgElement = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-arrow-down-to-line-icon lucide-arrow-down-to-line\"><path d=\"M12 17V3\"/><path d=\"m6 11 6 6 6-6\"/><path d=\"M19 21H5\"/></svg>";
                         if (wishlistBtn) {
                             const clone = wishlistBtn.cloneNode(true) as HTMLElement;
                             clone.innerHTML = svgElement;
                             clone.classList.add("codeuriii-save-button");
-                            clone.classList.remove("wishlistButton_c3d04b");
+                            clone.classList.remove(paths.wishlistClassNameToRemove);
                             clone.style.insetInlineStart = "10px";
                             clone.style.position = "absolute";
                             clone.style.top = "10px";
@@ -450,7 +485,8 @@ export default definePlugin({
                             }
                             if (profileEffectContainer) {
                                 clone.addEventListener("click", async () => {
-                                    const profileEffects = shopCard.querySelector(".profileEffects__01370");
+                                    // TODO
+                                    const profileEffects = shopCard.querySelector(paths.profileEffect);
                                     if (profileEffects) {
                                         const images = Array.from(profileEffects.querySelectorAll("img"));
                                         const srcs = images.map(img => img.src);
@@ -474,20 +510,22 @@ export default definePlugin({
             });
 
             function DOMProfileDecoration() {
-                const container = document.querySelector("div.inner_c0bea0");
+                const container = document.querySelector(paths.divInner);
                 let userId = "";
-                userId = container?.querySelector<HTMLImageElement>(".avatar__44b0c")?.src.split("/")[4]!.split("?")[0] || "";
+                userId = container?.querySelector<HTMLImageElement>(paths.bigAvatar)?.src.split("/")[4]!.split("?")[0] || "";
                 // console.log(userId);
                 if (userId !== "some id") return;
 
                 const profileDecoration = document.createElement("div");
-                profileDecoration.className = "profileEffects__01370";
+                profileDecoration.className = paths.profileEffectClassName;
                 profileDecoration.setAttribute("role", "img");
                 profileDecoration.setAttribute("aria-label", "Un galion pirate hanté dérive sinistrement à travers le profil, un spectacle qui donne la chair de poule même aux marins les plus endurcis.");
+                // TODO
                 profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/882db9a69083943f1f9a474527cb5a639b380e3f84070a8c2809a9258e28c29a?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
-                if (!container?.querySelector(".profileEffects__01370")) {
+                if (!container?.querySelector(paths.profileEffect)) {
                     container?.appendChild(profileDecoration);
                     setTimeout(() => {
+                        // TODO
                         profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/8d072dbcdb5b4cdfcf4bfaf7cc3289b49f297250bd7f1075b39dc0a6862437aa?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
                     }, 3000);
                 }
