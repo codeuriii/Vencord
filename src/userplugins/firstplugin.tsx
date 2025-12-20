@@ -206,22 +206,21 @@ const paths = {
     bigAvatarDecorationClassName: "_44b0c28be7879b7b-avatarDecoration",
 
     // Je trouve pas
-    peopleListItem: ".peopleListItem_cc6179",
-    videoImgClassName: "img__4bbc6",
-    videoContainerClassName: "videoContainer__4bbc6",
-    divVideoContainerClassName: "container__4bbc6",
+    peopleListItem: ".c8ffbb79449f399c-member",
+    videoImgClassName: "_4bbc6dc06e75ad52-img",
+    videoContainerClassName: "_4bbc6dc06e75ad52-videoContainer",
+    divVideoContainerClassName: "_4bbc6dc06e75ad52-container",
 
     childContainer: "._91a9d7f7e5248a56-childContainer",
-    productContainer: ".productCardContainer_fcbddd",
+    productContainer: ".fcbddd55b8b335a1-productCardContainer",
 
     // Shop
-    avatarContainer: ".wrapper__44b0c.avatar_d71c71",
-    nameplateContainer: ".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0",
-    nameplatePreview: ".nameplatePreview__6d099",
-    profileEffect: ".profileEffects__01370",
-    profileEffectClassName: "profileEffects__01370",
-    wishlistButton: ".wishlistButton__979b1.wishlistButton__7b466",
-    wishlistClassNameToRemove: "wishlistButton_c3d04b",
+    avatarContainer: "._44b0c28be7879b7b-wrapper.d71c71459df6d8de-avatar",
+    nameplateContainer: ".f7b5db847b9defee-nameplatePreviewSampleItem.e144e058a84f76ff-nameplatePreview",
+    nameplatePreview: ".e144e058a84f76ff-nameplatePreview",
+    profileEffect: "._0137000bc80ab6ea-profileEffects",
+    profileEffectClassName: "_0137000bc80ab6ea-profileEffects",
+    wishlistButton: "._979b184ce6e2670e-wishlistButton._7b466334a5d8dbb2-wishlistButton",
 
     divInner: "div.inner_c0bea0"
 }
@@ -316,7 +315,7 @@ export default definePlugin({
             };
 
             // Décoration pour le profil a droite en mp + éventuellement sur les serveurs
-            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.bigAvatarDecoration}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><div class=\"avatarStack__44b0c\"><img class=\"${paths.bigAvatarClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></div></foreignObject></svg>`;
+            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.bigAvatarDecorationClassName}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><div class=\"avatarStack__44b0c\"><img class=\"${paths.bigAvatarClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></div></foreignObject></svg>`;
             const wrappers = Array.from(document.querySelectorAll(paths.wrapper));
             for (const wrapper of wrappers) {
                 if (!wrapper.querySelector(paths.bigAvatarDecoration)) {
@@ -458,7 +457,6 @@ export default definePlugin({
                             const clone = wishlistBtn.cloneNode(true) as HTMLElement;
                             clone.innerHTML = svgElement;
                             clone.classList.add("codeuriii-save-button");
-                            clone.classList.remove(paths.wishlistClassNameToRemove);
                             clone.style.insetInlineStart = "10px";
                             clone.style.position = "absolute";
                             clone.style.top = "10px";
