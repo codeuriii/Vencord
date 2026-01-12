@@ -53,7 +53,7 @@ function createPinMenuItem(userId: string) {
                 }}>
             </Menu.MenuItem>
 
-            <Menu.MenuSeparator/>
+            <Menu.MenuSeparator />
 
             <Menu.MenuItem
                 id="remove-decoration-avatar"
@@ -93,7 +93,7 @@ function createPinMenuItem(userId: string) {
                 }}>
             </Menu.MenuItem>
 
-            <Menu.MenuSeparator/>
+            <Menu.MenuSeparator />
 
             <Menu.MenuItem
                 id="apply-all"
@@ -228,7 +228,7 @@ const paths = {
     wishlistButton: "._979b184ce6e2670e-wishlistButton._7b466334a5d8dbb2-wishlistButton",
 
     divInner: "div.inner_c0bea0"
-}
+};
 
 export default definePlugin({
     name: "CodeurIII Plugin",
@@ -320,7 +320,7 @@ export default definePlugin({
             };
 
             // Décoration pour le profil a droite en mp + éventuellement sur les serveurs
-            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.avatarDecorationContainerClassName}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><img class=\"${paths.bigAvatarDecorationClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></foreignObject></svg>`;
+            const element = `<svg width="x260" height="x261" viewBox="0 0 x260 x261" class="${paths.avatarDecorationContainerClassName}" aria-hidden="true"><foreignObject x="0" y="0" width="x261" height="x261" mask="url(#svg-mask-avatar-decoration-status-round-x262)"><img class="${paths.bigAvatarDecorationClassName}" alt=" " aria-hidden="true" src="x280"></foreignObject></svg>`;
             const wrappers = Array.from(document.querySelectorAll(paths.wrapper));
             for (const wrapper of wrappers) {
                 if (!wrapper.querySelector(paths.bigAvatarDecoration)) {
@@ -387,7 +387,7 @@ export default definePlugin({
                 await DataStore.set("plaques", plaques);
             }
 
-            const videoElement = `<div class=\"${paths.divVideoContainerClassName}\" aria-hidden=\"true\" style=\"background: linear-gradient(90deg, transparent 0%, rgba(8, 100, 96, 0.08) 20%, rgba(8, 100, 96, 0.08) 50%, rgba(8, 100, 96, 0.2) 100%);\"><div class=\"${paths.videoContainerClassName}\" style=\"mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.3) 147.812px, rgb(0, 0, 0) 197.812px);\"><video src=\"x280\" poster=\"x281\" playsinline class=\"${paths.videoImgClassName}\" tabindex=\"-1\" loop></video></div></div>`;
+            const videoElement = `<div class="${paths.divVideoContainerClassName}" aria-hidden="true" style="background: linear-gradient(90deg, transparent 0%, rgba(8, 100, 96, 0.08) 20%, rgba(8, 100, 96, 0.08) 50%, rgba(8, 100, 96, 0.2) 100%);"><div class="${paths.videoContainerClassName}" style="mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.3) 147.812px, rgb(0, 0, 0) 197.812px);"><video src="x280" poster="x281" playsinline class="${paths.videoImgClassName}" tabindex="-1" loop></video></div></div>`;
             document.querySelectorAll(paths.childContainer).forEach(container => {
                 if (container.querySelector("video")) return;
                 const avatar = container.querySelector("img")!;
@@ -525,12 +525,12 @@ export default definePlugin({
                 profileDecoration.setAttribute("role", "img");
                 profileDecoration.setAttribute("aria-label", "Un galion pirate hanté dérive sinistrement à travers le profil, un spectacle qui donne la chair de poule même aux marins les plus endurcis.");
                 // TODO
-                profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/882db9a69083943f1f9a474527cb5a639b380e3f84070a8c2809a9258e28c29a?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
+                profileDecoration.innerHTML = "<div class=\"inner__01370\"><img alt=\"\" aria-hidden=\"true\" src=\"https://cdn.discordapp.com/assets/content/882db9a69083943f1f9a474527cb5a639b380e3f84070a8c2809a9258e28c29a?query=dmView\" class=\"effect__01370\" style=\"top: 0px; left: 0px;\"><img alt=\"\" aria-hidden=\"true\" src=\"data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==\"></div>";
                 if (!container?.querySelector(paths.profileEffect)) {
                     container?.appendChild(profileDecoration);
                     setTimeout(() => {
                         // TODO
-                        profileDecoration.innerHTML = `<div class="inner__01370"><img alt="" aria-hidden="true" src="https://cdn.discordapp.com/assets/content/8d072dbcdb5b4cdfcf4bfaf7cc3289b49f297250bd7f1075b39dc0a6862437aa?query=dmView" class="effect__01370" style="top: 0px; left: 0px;"><img alt="" aria-hidden="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></div>`;
+                        profileDecoration.innerHTML = "<div class=\"inner__01370\"><img alt=\"\" aria-hidden=\"true\" src=\"https://cdn.discordapp.com/assets/content/8d072dbcdb5b4cdfcf4bfaf7cc3289b49f297250bd7f1075b39dc0a6862437aa?query=dmView\" class=\"effect__01370\" style=\"top: 0px; left: 0px;\"><img alt=\"\" aria-hidden=\"true\" src=\"data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==\"></div>";
                     }, 3000);
                 }
             }
