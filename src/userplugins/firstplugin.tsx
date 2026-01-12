@@ -190,22 +190,27 @@ const oldBadge = "https://cdn.discordapp.com/clan-badges/621302461600235531/59ae
 const newBadge = "https://cdn.discordapp.com/clan-badges/1369311130513834174/e701df75ce906698f0d02ce19bf7c8c6.png";
 
 const paths = {
+    // Icone de badge
     img_badge: "img._10651c5cfe637db6-badge",
 
-    // Message list item
+    // Messages dans la conv
     messageListItem: "._5126c0cd07f243a0-messageListItem",
     littleAvatar: "img.c19a557985eb7793-avatar",
     littleAvatarDecoration: "img.c19a557985eb7793-avatarDecoration",
 
+    // DM profile
     littleAvatarDecorationClassName: "c19a557985eb7793-avatarDecoration",
     wrapper: "._44b0c28be7879b7b-wrapper",
 
+    // Profile partout
     bigAvatar: "._44b0c28be7879b7b-avatar",
     bigAvatarClassName: "_44b0c28be7879b7b-avatar",
     bigAvatarDecoration: "._44b0c28be7879b7b-avatarDecoration",
     bigAvatarDecorationClassName: "_44b0c28be7879b7b-avatarDecoration",
+    avatarDecorationContainer: "._44b0c28be7879b7b-avatarDecorationContainer",
+    avatarDecorationContainerClassName: "_44b0c28be7879b7b-avatarDecorationContainer",
 
-    // Je trouve pas
+    // Membres d'un serveur discord, sur la droite
     peopleListItem: ".c8ffbb79449f399c-member",
     videoImgClassName: "_4bbc6dc06e75ad52-img",
     videoContainerClassName: "_4bbc6dc06e75ad52-videoContainer",
@@ -315,7 +320,7 @@ export default definePlugin({
             };
 
             // Décoration pour le profil a droite en mp + éventuellement sur les serveurs
-            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.bigAvatarDecorationClassName}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><div class=\"avatarStack__44b0c\"><img class=\"${paths.bigAvatarClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></div></foreignObject></svg>`;
+            const element = `<svg width=\"x260\" height=\"x261\" viewBox=\"0 0 x260 x261\" class=\"${paths.avatarDecorationContainerClassName}\" aria-hidden=\"true\"><foreignObject x=\"0\" y=\"0\" width=\"x261\" height=\"x261\" mask=\"url(#svg-mask-avatar-decoration-status-round-x262)\"><img class=\"${paths.bigAvatarDecorationClassName}\" alt=\" \" aria-hidden=\"true\" src=\"x280\"></foreignObject></svg>`;
             const wrappers = Array.from(document.querySelectorAll(paths.wrapper));
             for (const wrapper of wrappers) {
                 if (!wrapper.querySelector(paths.bigAvatarDecoration)) {
@@ -363,7 +368,7 @@ export default definePlugin({
             }
 
             document.querySelectorAll(paths.peopleListItem).forEach(peopleListItem => {
-                const svgElement = peopleListItem.querySelector<SVGElement>(paths.bigAvatarDecorationClassName);
+                const svgElement = peopleListItem.querySelector<SVGElement>(paths.bigAvatarDecoration);
                 const decorationImg = svgElement?.querySelector("img");
                 if (decorationImg) {
                     peopleListItem.addEventListener("mouseenter", () => {
