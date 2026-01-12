@@ -2,7 +2,7 @@ name: Sync upstream
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/5 * * * *"   # toutes les 5 minutes
   workflow_dispatch:
 
 jobs:
@@ -12,12 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Sync upstream safely
+      - name: Sync upstream
         run: |
-          set -e
-
           git config user.name "github-actions"
           git config user.email "actions@github.com"
 
@@ -25,13 +24,5 @@ jobs:
           git fetch upstream
 
           git checkout main
-
-          # rien de nouveau upstream
-          if [ "$(git rev-parse HEAD)" = "$(git rev-parse upstream/main)" ]; then
-            echo "Upstream déjà à jour"
-            exit 0
-          fi
-
-          # tentative fast-forward uniquement
           git merge --ff-only upstream/main
           git push origin main
