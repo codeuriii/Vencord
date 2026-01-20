@@ -438,7 +438,7 @@ export default definePlugin({
                     .replaceAll("x281", plaques[userId][1]);
                 container.addEventListener("mouseenter", () => {
                     const video = container.querySelector("video")!;
-                    const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
+                    const img = container.querySelector(paths.avatarDecorationContainer)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("false", "true");
                     }
@@ -446,7 +446,7 @@ export default definePlugin({
                 });
                 container.addEventListener("mouseleave", () => {
                     const video = container.querySelector("video")!;
-                    const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
+                    const img = container.querySelector(paths.avatarDecorationContainer)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("true", "false");
                     }
