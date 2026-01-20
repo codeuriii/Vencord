@@ -340,10 +340,17 @@ export default definePlugin({
                         if (!["40", "16"].includes(firstSvg.getAttribute("width")!)) {
                             url = url.replaceAll("false", "true");
                         }
+                        let mask: string | string[];
+                        mask = firstSvg.querySelector("foreignObject")!.getAttribute("mask")!.split("-").pop()!.replace(")", "")!;
+                        if (mask.includes("90") && mask.includes("r")) {
+                            mask = "32";
+                        } else if (mask.includes("rgu") && mask.includes("#")) {
+                            mask = "32";
+                        }
                         temp.innerHTML = element.replaceAll("x280", url)
                             .replaceAll("x260", dimensions["x" + firstSvg.getAttribute("width")!])
                             .replaceAll("x261", dimensions["y" + firstSvg.getAttribute("height")!])
-                            .replaceAll("x262", firstSvg.querySelector("foreignObject")!.getAttribute("mask")!.split("-").pop()!.replace(")", "")!);
+                            .replaceAll("x262", mask);
                         const node = temp.firstElementChild;
                         firstSvg.parentElement!.insertBefore(node!, firstSvg.nextSibling);
                     }
