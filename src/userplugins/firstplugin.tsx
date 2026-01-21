@@ -343,7 +343,7 @@ export default definePlugin({
                         }
                         let mask: string | string[];
                         mask = firstSvg.querySelector("foreignObject")!.getAttribute("mask")!.split("-").pop()!.replace(")", "")!;
-                        if (mask.includes("«") && mask.includes("r")) {
+                        if (mask.includes("«")) {
                             mask = "32";
                         }
                         temp.innerHTML = element.replaceAll("x280", url)
