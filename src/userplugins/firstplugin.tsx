@@ -8,6 +8,7 @@ import { findGroupChildrenByChildId, NavContextMenuPatchCallback } from "@api/Co
 import { DataStore } from "@api/index";
 import { showNotification } from "@api/Notifications";
 import definePlugin, { StartAt } from "@utils/types";
+import type { Channel, User } from "@vencord/discord-types";
 import { Menu } from "@webpack/common";
 
 function createPinMenuItem(userId: string) {
@@ -174,11 +175,23 @@ async function saveProfileEffect(userId: string, urls: []) {
     return profileEffects;
 }
 
-const UserContext: NavContextMenuPatchCallback = (children, props) => {
-    const container = findGroupChildrenByChildId("close-dm", children);
-    if (container) {
-        const idx = container.findIndex(c => c?.props?.id === "close-dm");
-        container.splice(idx, 0, createPinMenuItem(props.user.id));
+interface UserContextProps {
+    channel: Channel;
+    guildId?: string;
+    user: User;
+}
+
+const UserContext: NavContextMenuPatchCallback = (children, { user, guildId }: UserContextProps) => {
+    if (!user) return;
+
+    const closeDmContainer = findGroupChildrenByChildId("close-dm", children);
+    const profileContainer = findGroupChildrenByChildId("user-profile", children);
+
+    if (closeDmContainer) {
+        const idx = closeDmContainer.findIndex(c => c?.props?.id === "close-dm");
+        closeDmContainer.splice(idx, 0, createPinMenuItem(user.id));
+    } else if (profileContainer) {
+        profileContainer.splice(-1, 0, createPinMenuItem(user.id));
     }
 };
 
