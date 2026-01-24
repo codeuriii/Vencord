@@ -204,41 +204,41 @@ const newBadge = "https://cdn.discordapp.com/clan-badges/1369311130513834174/e70
 
 const paths = {
     // Icone de badge
-    img_badge: "img._10651c5cfe637db6-badge",
+    img_badge: "img.badge__10651",
 
     // Messages dans la conv
-    messageListItem: "._5126c0cd07f243a0-messageListItem",
-    littleAvatar: "img.c19a557985eb7793-avatar",
-    littleAvatarDecoration: "img.c19a557985eb7793-avatarDecoration",
+    messageListItem: ".messageListItem__5126c",
+    littleAvatar: "img.avatar_c19a55",
+    littleAvatarDecoration: "img.avatarDecoration_c19a55",
 
     // DM profile
-    littleAvatarDecorationClassName: "c19a557985eb7793-avatarDecoration",
-    wrapper: "._44b0c28be7879b7b-wrapper",
+    littleAvatarDecorationClassName: "avatarDecoration_c19a55",
+    wrapper: ".wrapper__44b0c",
 
     // Profile partout
-    bigAvatar: "._44b0c28be7879b7b-avatar",
-    bigAvatarClassName: "_44b0c28be7879b7b-avatar",
-    bigAvatarDecoration: "._44b0c28be7879b7b-avatarDecoration",
-    bigAvatarDecorationClassName: "_44b0c28be7879b7b-avatarDecoration",
-    avatarDecorationContainer: "._44b0c28be7879b7b-avatarDecorationContainer",
-    avatarDecorationContainerClassName: "_44b0c28be7879b7b-avatarDecorationContainer",
+    bigAvatar: ".avatar__44b0c",
+    bigAvatarClassName: "avatar__44b0c",
+    bigAvatarDecoration: ".avatarDecoration__44b0c",
+    bigAvatarDecorationClassName: "avatarDecoration__44b0c",
+    avatarDecorationContainer: ".avatarDecorationContainer__44b0c",
+    avatarDecorationContainerClassName: "avatarDecorationContainer__44b0c",
 
     // Membres d'un serveur discord, sur la droite
-    peopleListItem: ".c8ffbb79449f399c-member",
-    videoImgClassName: "_4bbc6dc06e75ad52-img",
-    videoContainerClassName: "_4bbc6dc06e75ad52-videoContainer",
-    divVideoContainerClassName: "_4bbc6dc06e75ad52-container",
+    peopleListItem: ".member_c8ffbb",
+    videoImgClassName: "img__4bbc6",
+    videoContainerClassName: "videoContainer__4bbc6",
+    divVideoContainerClassName: "container__4bbc6",
+    childContainer: ".childContainer__91a9d",
 
-    childContainer: "._91a9d7f7e5248a56-childContainer",
-    productContainer: ".fcbddd55b8b335a1-productCardContainer",
+    productContainer: ".productCardContainer_fcbddd",
 
     // Shop
-    avatarContainer: "._44b0c28be7879b7b-wrapper.d71c71459df6d8de-avatar",
-    nameplateContainer: ".f7b5db847b9defee-nameplatePreviewSampleItem.e144e058a84f76ff-nameplatePreview",
-    nameplatePreview: ".e144e058a84f76ff-nameplatePreview",
-    profileEffect: "._0137000bc80ab6ea-profileEffects",
-    profileEffectClassName: "_0137000bc80ab6ea-profileEffects",
-    wishlistButton: "._979b184ce6e2670e-wishlistButton._7b466334a5d8dbb2-wishlistButton",
+    avatarContainer: ".wrapper__44b0c.avatar_d71c71",
+    nameplateContainer: ".nameplatePreviewSampleItem_f7b5db.nameplatePreview_e144e0",
+    nameplatePreview: ".nameplatePreview_e144e0",
+    profileEffect: ".profileEffects__01370",
+    profileEffectClassName: "profileEffects__01370",
+    wishlistButton: ".wishlistButton__979b1.wishlistButton__7b466",
 
     divInner: "div.inner_c0bea0"
 };
