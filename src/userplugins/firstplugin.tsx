@@ -352,7 +352,6 @@ export default definePlugin({
                         let url = decorationsAvatar[userId];
                         if (!["40", "32", "16"].includes(firstSvg.getAttribute("width")!)) {
                             url = url.replaceAll("false", "true");
-                            console.log("here");
                         }
                         let mask: string | string[];
                         mask = firstSvg.querySelector("foreignObject")!.getAttribute("mask")!.split("-").pop()!.replace(")", "")!;
