@@ -227,7 +227,7 @@ const paths = {
     peopleListItem: ".member_c8ffbb",
     videoImgClassName: "img__4bbc6",
     videoContainerClassName: "videoContainer__4bbc6",
-    divVideoContainerClassName: "container__4bbc6",
+    divVideoContainerClassName: "container_df39b2",
     childContainer: ".childContainer__91a9d",
 
     productContainer: ".productCardContainer_fcbddd",
