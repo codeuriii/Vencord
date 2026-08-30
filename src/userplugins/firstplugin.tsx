@@ -288,10 +288,18 @@ export default definePlugin({
                             ancestor = ancestor.parentElement!;
                         }
                         ancestor.addEventListener("mouseenter", () => {
-                            decoration.src = decoration.src.replaceAll("false", "true");
+                            if (decoration.src.includes("false")) {
+                                decoration.src = decoration.src.replaceAll("false", "true");
+                            } else if (decoration.src.includes("static")) {
+                                decoration.src = decoration.src.replaceAll("static", "animated");
+                            }
                         });
                         ancestor.addEventListener("mouseleave", () => {
-                            decoration.src = decoration.src.replaceAll("true", "false");
+                            if (decoration.src.includes("true")) {
+                                decoration.src = decoration.src.replaceAll("true", "false");
+                            } else if (decoration.src.includes("animated")) {
+                                decoration.src = decoration.src.replaceAll("animated", "static");
+                            }
                         });
 
                         parent.insertBefore(decoration, avatar.nextSibling);
@@ -307,10 +315,18 @@ export default definePlugin({
 
                     if (foundDecoration) {
                         messageListItem.addEventListener("mouseenter", () => {
-                            foundDecoration!.src = foundDecoration!.src.replaceAll("false", "true");
+                            if (foundDecoration!.src.includes("false")) {
+                                foundDecoration!.src = foundDecoration!.src.replaceAll("false", "true");
+                            } else if (foundDecoration!.src.includes("static")) {
+                                foundDecoration!.src = foundDecoration!.src.replaceAll("static", "animated");
+                            }
                         });
                         messageListItem.addEventListener("mouseleave", () => {
-                            foundDecoration!.src = foundDecoration!.src.replaceAll("true", "false");
+                            if (foundDecoration!.src.includes("true")) {
+                                foundDecoration!.src = foundDecoration!.src.replaceAll("true", "false");
+                            } else if (foundDecoration!.src.includes("animated")) {
+                                foundDecoration!.src = foundDecoration!.src.replaceAll("animated", "static");
+                            }
                         });
                     }
                 }
@@ -352,6 +368,7 @@ export default definePlugin({
                         let url = decorationsAvatar[userId];
                         if (!["40", "32", "16"].includes(firstSvg.getAttribute("width")!)) {
                             url = url.replaceAll("false", "true");
+                            url = url.replaceAll("static", "animated");
                         }
                         let mask: string | string[];
                         mask = firstSvg.querySelector("foreignObject")!.getAttribute("mask")!.split("-").pop()!.replace(")", "")!;
@@ -373,12 +390,14 @@ export default definePlugin({
                             const img = ancestor.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                             if (img) {
                                 img.src = img.src.replaceAll("false", "true");
+                                img.src = img.src.replaceAll("static", "animated");
                             }
                         });
                         ancestor.addEventListener("mouseleave", () => {
                             const img = ancestor.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                             if (img) {
                                 img.src = img.src.replaceAll("true", "false");
+                                img.src = img.src.replaceAll("animated", "static");
                             }
                         });
                     }
@@ -391,9 +410,11 @@ export default definePlugin({
                 if (decorationImg) {
                     peopleListItem.addEventListener("mouseenter", () => {
                         decorationImg.src = decorationImg.src.replaceAll("false", "true");
+                        decorationImg.src = decorationImg.src.replaceAll("static", "animated");
                     });
                     peopleListItem.addEventListener("mouseleave", () => {
                         decorationImg.src = decorationImg.src.replaceAll("true", "false");
+                        decorationImg.src = decorationImg.src.replaceAll("animated", "static");
                     });
                 }
             });
@@ -429,17 +450,20 @@ export default definePlugin({
                         const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                         if (img) {
                             img.src = img.src.replaceAll("false", "true");
+                            img.src = img.src.replaceAll("static", "animated");
                         }
                     });
                     container.addEventListener("mouseleave", () => {
                         const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                         if (img) {
                             img.src = img.src.replaceAll("true", "false");
+                            img.src = img.src.replaceAll("animated", "static");
                         }
                     });
                     const img = container.querySelector(paths.bigAvatarDecoration)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replace("true", "false");
+                        img.src = img.src.replace("animated", "static");
                     }
                     return;
                 }
@@ -451,6 +475,7 @@ export default definePlugin({
                     const img = container.querySelector(paths.avatarDecorationContainer)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("false", "true");
+                        img.src = img.src.replaceAll("static", "animated");
                     }
                     video.play();
                 });
@@ -459,6 +484,7 @@ export default definePlugin({
                     const img = container.querySelector(paths.avatarDecorationContainer)?.querySelector("img");
                     if (img) {
                         img.src = img.src.replaceAll("true", "false");
+                        img.src = img.src.replaceAll("animated", "static");
                     }
                     video.pause();
                 });
@@ -492,7 +518,7 @@ export default definePlugin({
                             );
                             if (avatarContainer) {
                                 clone.addEventListener("click", async () => {
-                                    const url = Array.from(avatarContainer.querySelectorAll("img")).reverse()[0].src;
+                                    const url = Array.from(avatarContainer.querySelectorAll("img")).reverse()[0].src.replaceAll("true", "false").replaceAll("animated", "static");
                                     await DataStore.set("temporaireAvatarDecorationUrl", url);
                                     notify("Décoration stockée temporairement !");
                                 });
